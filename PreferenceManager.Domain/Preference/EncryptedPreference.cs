@@ -1,6 +1,6 @@
 namespace PreferenceManager.Domain.Preference;
 
-public class EncryptedSensitivePrefence
+public class EncryptedPreference
 {
     
 }

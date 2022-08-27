@@ -2,9 +2,17 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docker", "docker\docker.csproj", "{47E86089-776F-452A-AE76-ED1D336F5EFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceManager", "PreferenceManager\PreferenceManager.csproj", "{B9402EA0-DA49-4D22-8779-5A8A4E84A8CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceManager.API", "PreferenceManager.API\PreferenceManager.API.csproj", "{B9402EA0-DA49-4D22-8779-5A8A4E84A8CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceManager.Tests", "PreferenceManager.Tests\PreferenceManager.Tests.csproj", "{020BAC66-1974-45A9-BC05-8B96DBFD4765}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceManager.IntegrationTests", "PreferenceManager.IntegrationTests\PreferenceManager.IntegrationTests.csproj", "{AC43791B-CFE4-496F-9F07-BFC9B03DAA48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceManager.Domain", "PreferenceManager.Domain\PreferenceManager.Domain.csproj", "{CD486619-843F-43E6-800D-94465994288C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceManager.UseCase", "PreferenceManager.UseCase\PreferenceManager.UseCase.csproj", "{5149DE58-05B8-41FE-83BC-75778AAADBE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceManager.Infrastructure", "PreferenceManager.Infrastructure\PreferenceManager.Infrastructure.csproj", "{403D2D0A-156E-4E8B-B9D6-9B48E84BDAF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +32,21 @@ Global
 		{020BAC66-1974-45A9-BC05-8B96DBFD4765}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{020BAC66-1974-45A9-BC05-8B96DBFD4765}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{020BAC66-1974-45A9-BC05-8B96DBFD4765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC43791B-CFE4-496F-9F07-BFC9B03DAA48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC43791B-CFE4-496F-9F07-BFC9B03DAA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC43791B-CFE4-496F-9F07-BFC9B03DAA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC43791B-CFE4-496F-9F07-BFC9B03DAA48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD486619-843F-43E6-800D-94465994288C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD486619-843F-43E6-800D-94465994288C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD486619-843F-43E6-800D-94465994288C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD486619-843F-43E6-800D-94465994288C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5149DE58-05B8-41FE-83BC-75778AAADBE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5149DE58-05B8-41FE-83BC-75778AAADBE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5149DE58-05B8-41FE-83BC-75778AAADBE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5149DE58-05B8-41FE-83BC-75778AAADBE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{403D2D0A-156E-4E8B-B9D6-9B48E84BDAF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{403D2D0A-156E-4E8B-B9D6-9B48E84BDAF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{403D2D0A-156E-4E8B-B9D6-9B48E84BDAF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{403D2D0A-156E-4E8B-B9D6-9B48E84BDAF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

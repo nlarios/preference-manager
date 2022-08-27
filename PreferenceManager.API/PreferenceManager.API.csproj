@@ -9,14 +9,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Aggregator" Version="3.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.6" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Domain\Sollution" />
-      <Folder Include="Gateway" />
-      <Folder Include="Security" />
+      <ProjectReference Include="..\PreferenceManager.Domain\PreferenceManager.Domain.csproj" />
+      <ProjectReference Include="..\PreferenceManager.Infrastructure\PreferenceManager.Infrastructure.csproj" />
+      <ProjectReference Include="..\PreferenceManager.UseCase\PreferenceManager.UseCase.csproj" />
     </ItemGroup>
 
 </Project>

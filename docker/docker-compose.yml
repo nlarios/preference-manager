@@ -18,3 +18,22 @@ services:
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+  
+  redis:
+    image: registry.ops-euw1.tgtg.ninja/library/redis:6-alpine3.15
+    ports:
+      - 6379:6379
+  
+  db:
+    image: postgres:14.5-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=pm-db-local
+      - POSTGRES_USER=preference-manager
+      - POSTGRES_PASSWORD=preference-manager-pass
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      # copy the sql script to create tables
+      - ./scripts/create_pm_db.sql:/docker-entrypoint-initdb.d/create_pm_db.sql
