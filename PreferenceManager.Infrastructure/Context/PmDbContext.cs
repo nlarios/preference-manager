@@ -1,13 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
+using PreferenceManager.Domain.Person;
+using PreferenceManager.Domain.Preference;
 using PreferenceManager.Infrastructure.Entities;
+using Person = PreferenceManager.Infrastructure.Entities.Person;
+using Preference = PreferenceManager.Infrastructure.Entities.Preference;
 
 namespace PreferenceManager.Infrastructure.Context;
 
-public partial class PmDbContext : DbContext
+public class PmDbContext : DbContext
 {
+    static PmDbContext()
+    {
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<PreferenceType>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<PersonType>();
+    }
+    
     public PmDbContext()
     {
     }
@@ -16,28 +25,26 @@ public partial class PmDbContext : DbContext
         : base(options)
     {
     }
-
+    
     public virtual DbSet<Person> People { get; set; } = null!;
     public virtual DbSet<PersonPreference> PersonPreferences { get; set; } = null!;
     public virtual DbSet<Preference> Preferences { get; set; } = null!;
     public virtual DbSet<Solution> Solutions { get; set; } = null!;
     public virtual DbSet<SolutionPreference> SolutionPreferences { get; set; } = null!;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-            optionsBuilder.UseNpgsql(
-                "Host=localhost:5432;Database=pm-db-local;Username=preference-manager;Password=preference-manager-pass");
-        }
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     if (!optionsBuilder.IsConfigured)
+    //     {
+    //         optionsBuilder.UseNpgsql(
+    //             Configuration.GetConnectionString("PerformanceManagerDb"));
+    //     }
+    // }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasPostgresEnum("person_type_t", new[] {"ADMIN", "SOLUTION_MANAGER", "CONSUMER"})
-            .HasPostgresEnum("preference_type_t", new[] {"BOOLEAN", "INTEGER", "TEXT", "FlOAT"})
-            .HasPostgresEnum("user_type_t", new[] {"ADMIN", "SOLUTION_MANAGER", "CONSUMER"});
+        modelBuilder.HasPostgresEnum("person_type", new[] {"ADMIN", "SOLUTION_MANAGER", "CONSUMER"})
+            .HasPostgresEnum("preference_type", new[] {"BOOLEAN", "INTEGER", "TEXT", "FlOAT"});
 
         modelBuilder.Entity<Person>(entity =>
         {
@@ -52,6 +59,9 @@ public partial class PmDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .HasColumnName("name");
+
+            entity.Property(e => e.Type)
+                .HasColumnName("person_type");
         });
 
         modelBuilder.Entity<PersonPreference>(entity =>
@@ -60,9 +70,9 @@ public partial class PmDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
 
-            entity.Property(e => e.EncryptedValue)
+            entity.Property(e => e.EncryptedKey)
                 .HasMaxLength(255)
-                .HasColumnName("encrypted_value")
+                .HasColumnName("encrypted_key")
                 .HasDefaultValueSql("NULL::character varying");
 
             entity.Property(e => e.PersonId).HasColumnName("person_id");
@@ -96,7 +106,16 @@ public partial class PmDbContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("name");
 
+            entity.Property(e => e.Description)
+                .HasMaxLength(255)
+                .HasColumnName("description");
+
             entity.Property(e => e.Universal).HasColumnName("universal");
+
+            entity.Property(e => e.Encrypted).HasColumnName("encrypted");
+
+            entity.Property(e => e.Type)
+                .HasColumnName("preference_type");
         });
 
         modelBuilder.Entity<Solution>(entity =>
@@ -136,9 +155,5 @@ public partial class PmDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_solution_preference_solution_id");
         });
-
-        OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

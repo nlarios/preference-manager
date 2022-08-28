@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PreferenceManager.Domain.Person;
 
-namespace PreferenceManager.Infrastructure.Entities
+namespace PreferenceManager.Infrastructure.Entities;
+
+public class Person
 {
-    public partial class Person
+    public Person()
     {
-        public Person()
-        {
-            PersonPreferences = new HashSet<PersonPreference>();
-        }
-
-        public long Id { get; set; }
-        public string ExternalAuthId { get; set; } = null!;
-        public string Name { get; set; } = null!;
-
-        public virtual ICollection<PersonPreference> PersonPreferences { get; set; }
+        PersonPreferences = new HashSet<PersonPreference>();
     }
+
+    public long Id { get; set; }
+    public string ExternalAuthId { get; set; } = null!;
+    public string Name { get; set; } = null!;
+    public PersonType Type { get; set; } = PersonType.CONSUMER;
+
+    public virtual ICollection<PersonPreference> PersonPreferences { get; set; }
 }

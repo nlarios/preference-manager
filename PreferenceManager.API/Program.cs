@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PreferenceManager.Infrastructure.Context;
+using PreferenceManager.Infrastructure.DAL;
 using PreferenceManager.UseCase;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -91,8 +92,15 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // local services
-builder.Services.AddScoped<IGetUniversalPreferences, GetUniversalPreferencesUseCase>();
-builder.Services.AddScoped<DbContext, PmDbContext>();
+builder.Services.AddDbContext<PmDbContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IPreferenceRepository, PreferenceRepository>();
+builder.Services.AddScoped<IGetPreferences, GetPreferences>();
+builder.Services.AddScoped<IGetPersonPreferences, GetPersonPreferences>();
+builder.Services.AddScoped<IAddPreference, AddPreference>();
+builder.Services.AddScoped<ISolutionPreferenceRepository, SolutionPreferenceRepository>();
+builder.Services.AddScoped<ISolutionRepository, SolutionRepository>();
 
 var app = builder.Build();
 
