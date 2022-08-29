@@ -1,8 +1,8 @@
 # Preference-manager
 
 Centralized platform for preference management.
-The system provide an API that allows authorised Apps to create Preferences configurations.
-And also fill these preferences with Consumer data.
+The system provides an API that allows authorised Apps to create Preferences configurations
+and also fills these preferences with Consumer data.
 The implementation is not yet complete.
 
 ## Context diagram
