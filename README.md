@@ -22,8 +22,8 @@ I designed a second solution with microservices in the section performance [opti
   * API
   * UseCase (Application)
   * Domain
-  * Infrastructure
-Ass the Clean architecture suggests alla layers have access to Domain and Domain only to itself.
+  * Infrastructure  
+As the Clean architecture suggests alla layers have access to Domain and Domain only to itself.
 Infrastructure contains all the external services such as the DB and cache Connection so is decoupled from rest of the service.
 * Multiple preferences can apply to multiple solutions. This is making the domain more complex but is a more realistic scenario.
 * Preference configurations are stored in a single table (preference) and belong in the same domain model.
@@ -33,15 +33,15 @@ And also instead of connecting a universal preference with all the available sol
 * Unfortunately the functionality is not completed. 
 
 ### Domain model
-* Preferences
-Is the aggregate root that contains all information related to the configuration of a preference, such the type of the description. If it is a boolean flag or text.
+* **Preferences**  
+Contains all information related to the configuration of a preference, such the type of the description. If it is a boolean flag or text.
 It also contains an encrypted flag if the preference is sensitive and should be stored encrypted in our db;
-* Person  
+* **Person**  
 Contains information about the user such as the externalAuthId that is used for authentication by auth0
-* Solution
+* **Solution**
 Contains minimum information for the solution and the preference that can be applied to it.
-* PersonPreference  
-The entity that contains the actual preference of the consumer. Depending the preferenceType in preference it has the corresponding value.
+* **PersonPreference**  
+Contains the actual preference of the consumer. Depending the preferenceType in preference it has the corresponding value.
 
 
 ## Database schema
