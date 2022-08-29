@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "9883c80c-4969-4bf8-9c21-b8132a65d17d",
+		"name": "Acceptance Tests Preference Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9668208"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Authenticate admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"pm.environment.set(\"ACCESS_TOKEN\", json.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"client_id\": \"VCKxZF27UcTBjtcEjiw7k6dKOAJnFIaB\",\n    \"client_secret\": \"HACG-hykUtPV3VBZYoDLJ_ddRN3qHDRPwvMh911bg7IILJnnodQP_8Li51lU-X_q\",\n    \"audience\": \"http://localhost/preference-manager\",\n    \"grant_type\": \"client_credentials\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AUTH0}}/oauth/token",
+							"host": [
+								"{{AUTH0}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add universal preference",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var statusCode = 201;",
+									"var dataField = \"id\"",
+									"var json = pm.response.json();",
+									"",
+									"pm.test(\"Status code is \" + statusCode, function () {",
+									"    pm.response.to.have.status(statusCode);",
+									"});",
+									"",
+									"pm.test(\"Response has field \" + dataField, function () {",
+									"    pm.expect(json).to.have.property(dataField)",
+									"});",
+									"pm.environment.set(\"PREFERENCE_ID\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Universal Preference\",\n    \"description\" : \"test description\",\n    \"encrypted\" : false,\n    \"type\" : \"BOOLEAN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http{{S}}://{{HOST}}/admin/universal-preferences",
+							"protocol": "http{{S}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"universal-preferences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all universal preferences",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"strictSSL": false
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Length",
+								"value": "0",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "accept",
+								"value": "accept: application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{HOST}}/admin/universal-preferences",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"universal-preferences"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Solution Manager",
+			"item": [
+				{
+					"name": "Authenticate solution manager",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();",
+									"console.log(json.access_token);",
+									"pm.globals.set(\"ACCESS_TOKEN\", json.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"client_id\": \"NSkLKn4biw5wXFJEYgHzn9vrVNXngKlf\",\n    \"client_secret\": \"0Mw3AS7zDKA0yCsjRw14tcequaxcYGAclPw9JWVO_vb5-cGOIPSCTi9BZRjvVVRI\",\n    \"audience\": \"http://localhost/preference-manager\",\n    \"grant_type\": \"client_credentials\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AUTH0}}/oauth/token",
+							"host": [
+								"{{AUTH0}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add solution preference",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var statusCode = 201;",
+									"var dataField = \"id\"",
+									"var json = pm.response.json();",
+									"",
+									"pm.test(\"Status code is \" + statusCode, function () {",
+									"    pm.response.to.have.status(statusCode);",
+									"});",
+									"",
+									"pm.test(\"Response has field \" + dataField, function () {",
+									"    pm.expect(json).to.have.property(dataField)",
+									"});",
+									"pm.environment.set(\"SOLUTION_PREFERENCE_ID\", json.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Solution Preference\",\n    \"description\" : \"test description\",\n    \"encrypted\" : false,\n    \"type\" : \"BOOLEAN\",\n    \"solutionIds\": [1,3]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http{{S}}://{{HOST}}/solution-manager/preferences",
+							"protocol": "http{{S}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"solution-manager",
+								"preferences"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "consumer",
+			"item": [
+				{
+					"name": "Add person preference",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
