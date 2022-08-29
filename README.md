@@ -35,7 +35,7 @@ And also instead of connecting a universal preference with all the available sol
 ### Domain model
 * **Preferences**  
 Contains all information related to the configuration of a preference, such the type of the description. If it is a boolean flag or text.
-It also contains an encrypted flag if the preference is sensitive and should be stored encrypted in our db;
+It also contains an encrypted flag if the preference is sensitive and should be stored encrypted in our db.
 * **Person**  
 Contains information about the user such as the externalAuthId that is used for authentication by auth0
 * **Solution**

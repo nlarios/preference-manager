@@ -1,8 +1,5 @@
-using System.Text;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
 using PreferenceManager.Domain.Person;
-using PreferenceManager.Infrastructure.Cache;
 using PreferenceManager.Infrastructure.Context;
 using PreferenceManager.Infrastructure.DAL;
 using PreferenceManager.UseCase.Model;
@@ -52,6 +49,6 @@ public class EditPersonPreference : IEditPersonPreference
     private async void AddPreferenceToCache(string externalAuthId, Preference preference, PersonPreference personPreference )
     {
         // TODO implement Add to cache logic
-        // cacheKe: externalAuthId, value: PersonPreferenceCacheDoc
+        // cacheKey: externalAuthId, value: PersonPreferenceCacheDoc
     }
 }
