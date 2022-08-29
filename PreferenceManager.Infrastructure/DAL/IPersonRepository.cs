@@ -1,5 +1,8 @@
+using PreferenceManager.Domain.Person;
+
 namespace PreferenceManager.Infrastructure.DAL;
 
-public interface IPersonRepository : IDisposable
+public interface IPersonRepository
 {
+    Person? FindByExternalAuthId(string externalAuthId);
 }

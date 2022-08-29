@@ -1,8 +1,13 @@
+using PreferenceManager.Infrastructure.DAL;
 using Xunit;
 
 namespace PreferenceManager.IntegrationTests;
 
-public class AddPreferenceIntegrationTest
+[UseDatabase]
+public static class PreferenceRepositoryTest
 {
-    
+    public static void AddPreferenceToDb()
+    {
+        
+    }
 }

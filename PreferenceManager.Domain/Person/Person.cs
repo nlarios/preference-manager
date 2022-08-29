@@ -1,6 +1,8 @@
+using Aggregator;
+
 namespace PreferenceManager.Domain.Person;
 
-public class Person
+public class Person : AggregateRoot
 {
     public long Id { get; set; }
     

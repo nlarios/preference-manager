@@ -1,6 +1,6 @@
 namespace PreferenceManager.UseCase.Model;
 
-public class WebPersonPreference
+public class WebPersonPreferenceResponse
 {
     
 }

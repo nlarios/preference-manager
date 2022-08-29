@@ -1,6 +1,8 @@
+using Aggregator;
+
 namespace PreferenceManager.Domain.Solution;
 
-public class Solution
+public class Solution : AggregateRoot
 {
     public int Id { get; }
     

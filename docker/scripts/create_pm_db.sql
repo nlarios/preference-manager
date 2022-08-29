@@ -1,4 +1,4 @@
-CREATE TYPE preference_type AS ENUM ('boolean', 'integer', 'text', 'float');
+CREATE TYPE preference_type AS ENUM ('boolean', 'integer', 'string', 'float');
 CREATE TYPE person_type AS ENUM ('admin', 'solution_manager', 'consumer');
 
 CREATE TABLE preference (
@@ -32,7 +32,8 @@ CREATE TABLE person(
     "external_auth_id" varchar(255) NOT NULL,
     "name" varchar(255) NOT NULL,
     "person_type" person_type NOT NULL,
-    PRIMARY KEY (id)    
+    PRIMARY KEY (id),
+    UNIQUE (external_auth_id)
 );
 
 CREATE TABLE person_preference(

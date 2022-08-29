@@ -12,7 +12,7 @@ public class GetPreferences : IGetPreferences
         PreferenceRepository = preferenceRepository;
     }
     
-    public List<Preference?> GetUniversalPreferences()
+    public IReadOnlyCollection<Preference?> GetUniversalPreferences()
     {
         return PreferenceRepository.GetUniversalPreferences().ToList();
     }

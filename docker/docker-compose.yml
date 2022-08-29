@@ -18,11 +18,12 @@ services:
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
-  
-  redis:
-    image: registry.ops-euw1.tgtg.ninja/library/redis:6-alpine3.15
+      
+  cache:
+    image: redis:7.0.4-alpine
+    restart: always
     ports:
-      - 6379:6379
+      - '6379:6379'
   
   db:
     image: postgres:14.5-alpine

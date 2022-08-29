@@ -22,4 +22,9 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\PreferenceManager.Domain\PreferenceManager.Domain.csproj" />
+      <ProjectReference Include="..\PreferenceManager.UseCase\PreferenceManager.UseCase.csproj" />
+    </ItemGroup>
+
 </Project>

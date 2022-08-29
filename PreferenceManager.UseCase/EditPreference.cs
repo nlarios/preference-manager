@@ -10,13 +10,14 @@ using PreferenceManager.UseCase.Model;
 
 namespace PreferenceManager.UseCase;
 
-public class AddPreference : IAddPreference
+public class EditPreference : IEditPreference
 {
     private IPreferenceRepository preferenceRepository;
     private ISolutionRepository solutionRepository;
     private PmDbContext context;
 
-    public AddPreference(IPreferenceRepository preferenceRepository, ISolutionRepository solutionRepository, PmDbContext context)
+    public EditPreference(IPreferenceRepository preferenceRepository, ISolutionRepository solutionRepository,
+        PmDbContext context)
     {
         this.preferenceRepository = preferenceRepository;
         this.solutionRepository = solutionRepository;
@@ -32,10 +33,8 @@ public class AddPreference : IAddPreference
 
     public async Task<Preference> AddSolutionPreference(WebSolutionPreferenceRequest request, PersonType personType)
     {
-        IDbContextTransaction dbContextTransaction = null;
-        try
+        await using (var dbContextTransaction = context.Database.BeginTransaction())
         {
-            dbContextTransaction = context.Database.BeginTransaction();
             var solutions = solutionRepository.GetSolutionsByIds(request.SolutionIds);
             if (solutions.Count != request.SolutionIds.Count)
             {
@@ -46,21 +45,9 @@ public class AddPreference : IAddPreference
                 request.Type, solutions, PersonType.SOLUTION_MANAGER);
 
             preference = await preferenceRepository.InsertPreference(preference);
-            
+
             await dbContextTransaction.CommitAsync();
             return preference;
-        }
-        catch (Exception)
-        {
-            if (dbContextTransaction != null)
-                await dbContextTransaction.RollbackAsync();
-
-            throw;
-        }
-        finally
-        {
-            if (dbContextTransaction != null)
-                await dbContextTransaction.DisposeAsync();
         }
     }
 }

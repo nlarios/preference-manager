@@ -8,18 +8,19 @@ using PreferenceManager.UseCase.Model;
 
 namespace PreferenceManager.Controllers;
 
-[Route("admin/universal-preferences")]
+[Route("/universal-preferences")]
 [ApiController]
-public class AdminPreferenceController : ControllerBase
+[Authorize]
+public class UniversalPreferenceController : ControllerBase
 {
-    private IGetPreferences getPreferences;
+    private readonly IGetPreferences _getPreferences;
 
-    private IAddPreference addPreference;
+    private readonly IEditPreference _editPreference;
 
-    public AdminPreferenceController(IAddPreference addPreference, IGetPreferences getPreferences)
+    public UniversalPreferenceController(IEditPreference editPreference, IGetPreferences getPreferences)
     {
-        this.addPreference = addPreference;
-        this.getPreferences = getPreferences;
+        _editPreference = editPreference;
+        _getPreferences = getPreferences;
     }
 
     [HttpGet]
@@ -27,7 +28,7 @@ public class AdminPreferenceController : ControllerBase
     public List<WebPreferenceResponse> GetUniversalPreferences()
     {
         // TODO Add pagination
-        var preferences = getPreferences.GetUniversalPreferences()
+        var preferences = _getPreferences.GetUniversalPreferences()
             .Select(WebPreferenceMapper.MapPreferenceResponse)
             .ToList();
         return new List<WebPreferenceResponse>(preferences);
@@ -37,16 +38,14 @@ public class AdminPreferenceController : ControllerBase
     [Authorize("EditUniversalPreferences")]
     public async Task<IActionResult> AddUniversalPreference(WebUniversalPreferenceRequest request)
     {
-
-        var preference = await addPreference.AddUniversalPreference(request, PersonType.ADMIN);
-        
+        var preference = await _editPreference.AddUniversalPreference(request, PersonType.ADMIN);
         return new ObjectResult(preference) {StatusCode = StatusCodes.Status201Created};
     }
 
-    [HttpPut("universal-preferences/{id:int}")]
+    [HttpPut("{id:int}")]
     [Authorize("EditUniversalPreferences")]
-    public async Task<IActionResult> UpdateUniversalPreference(int id, WebUniversalPreferenceRequest request)
+    public Task<IActionResult> UpdateUniversalPreference(int id, WebUniversalPreferenceRequest request)
     {
-        return new ObjectResult(request) {StatusCode = StatusCodes.Status200OK};
+        throw new NotImplementedException();
     }
 }

@@ -5,7 +5,7 @@ using PreferenceManager.UseCase.Model;
 
 namespace PreferenceManager.UseCase;
 
-public interface IAddPreference
+public interface IEditPreference
 {
     public Task<Preference> AddUniversalPreference(WebUniversalPreferenceRequest request, PersonType personType);
     

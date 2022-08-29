@@ -55,9 +55,9 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("ReadSolutionPreferences",
         policy => policy.Requirements.Add(new HasScopeRequirement("read:solution_preferences", domain)));
     options.AddPolicy("EditConsumerPreferences",
-        policy => policy.Requirements.Add(new HasScopeRequirement("edit:solution_preferences", domain)));
+        policy => policy.Requirements.Add(new HasScopeRequirement("edit:consumer_preferences", domain)));
     options.AddPolicy("ReadConsumerPreferences",
-        policy => policy.Requirements.Add(new HasScopeRequirement("read:solution_preferences", domain)));
+        policy => policy.Requirements.Add(new HasScopeRequirement("read:consumer_preferences", domain)));
 });
 
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
@@ -94,13 +94,21 @@ builder.Services.AddSwaggerGen(c =>
 // local services
 builder.Services.AddDbContext<PmDbContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddStackExchangeRedisCache(option =>
+{
+    option.Configuration = configuration["RedisCacheUrl"];
+    option.InstanceName = "master";
+});
 
 builder.Services.AddScoped<IPreferenceRepository, PreferenceRepository>();
 builder.Services.AddScoped<IGetPreferences, GetPreferences>();
 builder.Services.AddScoped<IGetPersonPreferences, GetPersonPreferences>();
-builder.Services.AddScoped<IAddPreference, AddPreference>();
+builder.Services.AddScoped<IEditPreference, EditPreference>();
+builder.Services.AddScoped<IEditPersonPreference, EditPersonPreference>();
 builder.Services.AddScoped<ISolutionPreferenceRepository, SolutionPreferenceRepository>();
 builder.Services.AddScoped<ISolutionRepository, SolutionRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IPersonPreferenceRepository, PersonPreferenceRepository>();
 
 var app = builder.Build();
 

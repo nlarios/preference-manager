@@ -6,6 +6,7 @@ using PreferenceManager.Domain.Preference;
 using PreferenceManager.Infrastructure.Entities;
 using Person = PreferenceManager.Infrastructure.Entities.Person;
 using Preference = PreferenceManager.Infrastructure.Entities.Preference;
+using PersonPreference = PreferenceManager.Infrastructure.Entities.PersonPreference;
 
 namespace PreferenceManager.Infrastructure.Context;
 
@@ -31,16 +32,7 @@ public class PmDbContext : DbContext
     public virtual DbSet<Preference> Preferences { get; set; } = null!;
     public virtual DbSet<Solution> Solutions { get; set; } = null!;
     public virtual DbSet<SolutionPreference> SolutionPreferences { get; set; } = null!;
-
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     if (!optionsBuilder.IsConfigured)
-    //     {
-    //         optionsBuilder.UseNpgsql(
-    //             Configuration.GetConnectionString("PerformanceManagerDb"));
-    //     }
-    // }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresEnum("person_type", new[] {"ADMIN", "SOLUTION_MANAGER", "CONSUMER"})

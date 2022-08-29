@@ -4,5 +4,5 @@ namespace PreferenceManager.UseCase;
 
 public interface IGetPreferences
 {
-    public List<Preference?> GetUniversalPreferences();
+    public IReadOnlyCollection<Preference?> GetUniversalPreferences();
 }
